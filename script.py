@@ -140,7 +140,13 @@ def learnRidgeRegression(X,y,lambd):
     # lambd = ridge parameter (scalar)
     # Output:                                                                  
     # w = d x 1                                                                
-
+    xnp = np.array(X)
+    ynp = np.array(y)
+    xT = np.dot(xnp.T, xnp)
+    d = len(X[0])
+    val = lambd*np.identity(d)
+    invxT = np.linalg.inv(xT+val)
+    w = np.dot(np.dot(invxT, xnp.T), ynp)
     # IMPLEMENT THIS METHOD                                                   
     return w
 
