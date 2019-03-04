@@ -125,6 +125,11 @@ def learnOLERegression(X,y):
     # Output: 
     # w = d x 1 
 	
+    xnp = np.array(X)
+    ynp = np.array(y)
+    xT = np.dot(xnp.T, xnp)
+    invxT = np.linalg.inv(xT)
+    w = np.dot(np.dot(invxT, xnp.T), ynp)
     # IMPLEMENT THIS METHOD                                                   
     return w
 
@@ -147,7 +152,16 @@ def testOLERegression(w,Xtest,ytest):
     # Output:
     # mse
     
+    xnp = np.array(Xtest)
+    ynp = np.array(ytest)
+    N = len(Xtest)
+    res = 0
+    wt = np.array(w).T
+    for i in range(N):
+        res += ynp[i][0] - np.dot(wt, xnp[i])
+    res = res/N
     # IMPLEMENT THIS METHOD
+    mse = res
     return mse
 
 def regressionObjVal(w, X, y, lambd):
