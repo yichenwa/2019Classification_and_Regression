@@ -198,7 +198,12 @@ def mapNonLinear(x,p):
     # p - integer (>= 0)                                                       
     # Outputs:                                                                 
     # Xp - (N x (p+1)) 
-	
+    N = len(x)
+    #making a new array of given shape.
+    Xp = np.ones((N, p+1))
+    #raising power of all all rows of a single column in Xp
+    for i in range(1, p+1):
+          Xp[:, i] = np.power(x, i) 
     # IMPLEMENT THIS METHOD
     return Xp
 
