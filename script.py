@@ -176,7 +176,20 @@ def regressionObjVal(w, X, y, lambd):
     # to w (vector) for the given data X and y and the regularization parameter
     # lambda                                                                  
 
-    # IMPLEMENT THIS METHOD                                             
+    xnp = np.array(X)
+    ynp = np.array(y)
+    wr = np.array(w)
+    res = ynp - np.dot(xnp, wr)
+    val = np.dot(res.T, res)/2
+    val1 = (lambd*np.dot(wr.T, wr))/2
+    error = val + val1
+    #print(error)
+    #equation  - -X.T*Y + w*X.T*X + lambd*w
+    error_grad = -1*np.dot(xnp.T,ynp) + np.dot(wr, np.dot(xnp.T, xnp)) + lambd*wr
+    # IMPLEMENT THIS METHOD
+    print(np.dot(xnp.T,ynp).shape)
+    #print(error_grad)
+    #error_grad = 0
     return error, error_grad
 
 def mapNonLinear(x,p):
