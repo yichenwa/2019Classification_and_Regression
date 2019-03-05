@@ -164,7 +164,7 @@ def testOLERegression(w,Xtest,ytest):
     res = 0
     wt = np.array(w).T
     for i in range(N):
-        res += ynp[i][0] - np.dot(wt, xnp[i])
+        res += np.square(ynp[i][0] - np.dot(wt, xnp[i]))
     res = res/N
     # IMPLEMENT THIS METHOD
     mse = res
@@ -175,22 +175,22 @@ def regressionObjVal(w, X, y, lambd):
     # compute squared error (scalar) and gradient of squared error with respect
     # to w (vector) for the given data X and y and the regularization parameter
     # lambda                                                                  
-
-    xnp = np.array(X)
-    ynp = np.array(y)
-    wr = np.array(w)
-    res = ynp - np.dot(xnp, wr)
-    val = np.dot(res.T, res)/2
-    val1 = (lambd*np.dot(wr.T, wr))/2
-    error = val + val1
-    #print(error)
-    #equation  - -X.T*Y + w*X.T*X + lambd*w
-    error_grad = -1*np.dot(xnp.T,ynp) + np.dot(wr, np.dot(xnp.T, xnp)) + lambd*wr
+    yres = np.dot(X, np.transpose(w))
+    error_1 = np.subtract(y.reshape(y.size), yres)
+    error_2 = np.multiply(error_1, error_1)
+    error_3 = np.sum(error_2)
+    error_4 = np.dot(w, np.transpose(w))
+    error_5 = lambd*error_4
+    final_error_6 = 0.5*np.add(error_3, error_5)
+    error = final_error_6
+    prt_1 = -1*np.dot(np.transpose(X), y)
+    prt_2 = np.dot(w, np.dot(np.transpose(X), X))
+    prt_3 = np.add(prt_1.reshape(prt_1.size), prt_2)
+    prt_4 = lambd*w
+    error_grad = np.add(prt_3, prt_4)
     # IMPLEMENT THIS METHOD
-    print(np.dot(xnp.T,ynp).shape)
-    #print(error_grad)
-    #error_grad = 0
     return error, error_grad
+    
 
 def mapNonLinear(x,p):
     # Inputs:                                                                  
