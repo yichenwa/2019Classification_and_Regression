@@ -112,7 +112,7 @@ def ldaTest(means, covmat, Xtest, ytest):
         if (ytest[i] == ypred[i]):
             count+=1
     
-    acc = count/n
+    acc = count
     return acc,ypred
 
 def qdaTest(means,covmats,Xtest,ytest):
@@ -150,7 +150,7 @@ def qdaTest(means,covmats,Xtest,ytest):
         if (ytest[i] == ypred[i]):
             count+=1
     
-    acc = count/n
+    acc = count
     return acc,ypred
 
 def learnOLERegression(X,y):
