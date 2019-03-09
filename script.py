@@ -127,15 +127,14 @@ def qdaTest(means,covmats,Xtest,ytest):
     n = len(Xtest)
     d = len(Xtest[0])
     ypred = np.zeros(shape=(n,1))
-    
     for i in range(n):
         mx = float('-inf')
         for j in range(k):
             res = Xtest[i] - means.T[j]
             resT = res.T
             invcov = np.linalg.inv(covmats[j])
-            val1 = np.dot(resT, invcov)
-            val = np.dot(val1, res)
+            val1 = np.dot(res, invcov)
+            val = np.dot(val1, resT)
             final = -1/2*val
             det = np.linalg.det(covmats[j])
             div = np.power(det, d/2)
@@ -143,8 +142,7 @@ def qdaTest(means,covmats,Xtest,ytest):
             if (mx < total):
                 mx = total
                 ypred[i] = j+1
-    
-    
+
     count = 0
     for i in range(n):
         if (ytest[i] == ypred[i]):
