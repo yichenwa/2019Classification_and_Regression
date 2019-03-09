@@ -161,9 +161,16 @@ def learnOLERegression(X,y):
     # w = d x 1 
     xnp = np.array(X)
     ynp = np.array(y)
+    N = len(xnp)
     xT = np.dot(xnp.T, xnp)
     invxT = np.linalg.inv(xT)
     w = np.dot(np.dot(invxT, xnp.T), ynp)
+    wt = np.array(w).T
+    res = 0
+    for i in range(N):
+        res += np.square(ynp[i][0] - np.dot(wt, xnp[i]))
+    res = res/N
+    print(res)
     # IMPLEMENT THIS METHOD                                                   
     return w
 
@@ -311,11 +318,16 @@ lambdas = np.linspace(0, 1, num=k)
 i = 0
 mses3_train = np.zeros((k,1))
 mses3 = np.zeros((k,1))
+print("Question 3")
 for lambd in lambdas:
     w_l = learnRidgeRegression(X_i,y,lambd)
     mses3_train[i] = testOLERegression(w_l,X_i,y)
     mses3[i] = testOLERegression(w_l,Xtest_i,ytest)
+    #print("lambda is "+str(lambd))
+    #print("train value is "+str(mses3_train[i]))
+    #print("test value i "+str(mses3[i]))
     i = i + 1
+
 fig = plt.figure(figsize=[12,6])
 plt.subplot(1, 2, 1)
 plt.plot(lambdas,mses3_train)
@@ -333,6 +345,7 @@ mses4_train = np.zeros((k,1))
 mses4 = np.zeros((k,1))
 opts = {'maxiter' : 20}    # Preferred value.                                                
 w_init = np.ones((X_i.shape[1],1))
+print("Question 4")
 for lambd in lambdas:
     args = (X_i, y, lambd)
     w_l = minimize(regressionObjVal, w_init, jac=True, args=args,method='CG', options=opts)
@@ -340,6 +353,9 @@ for lambd in lambdas:
     w_l = np.reshape(w_l,[len(w_l),1])
     mses4_train[i] = testOLERegression(w_l,X_i,y)
     mses4[i] = testOLERegression(w_l,Xtest_i,ytest)
+    #print("lambda is "+str(lambd))
+    #print(float(mses4_train[i]))
+    #print(float(mses4[i]))
     i = i + 1
 fig = plt.figure(figsize=[12,6])
 plt.subplot(1, 2, 1)
