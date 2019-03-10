@@ -168,7 +168,7 @@ def learnOLERegression(X,y):
     for i in range(N):
         res += np.square(ynp[i][0] - np.dot(wt, xnp[i]))
     res = res/N
-    print(res)
+    #print(res)
     # IMPLEMENT THIS METHOD                                                   
     return w
 
