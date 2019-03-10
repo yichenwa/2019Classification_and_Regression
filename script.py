@@ -238,7 +238,7 @@ def mapNonLinear(x,p):
     # Xp - (N x (p+1)) 
     N = len(x)
     Xp = np.ones((N, p+1))
-    for i in range(1, p+1):
+    for i in range(p+1):
           Xp[:, i] = np.power(x, i) 
     # IMPLEMENT THIS METHOD
     return Xp
