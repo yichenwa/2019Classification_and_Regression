@@ -127,15 +127,14 @@ def qdaTest(means,covmats,Xtest,ytest):
     n = len(Xtest)
     d = len(Xtest[0])
     ypred = np.zeros(shape=(n,1))
-    
     for i in range(n):
         mx = float('-inf')
         for j in range(k):
             res = Xtest[i] - means.T[j]
             resT = res.T
             invcov = np.linalg.inv(covmats[j])
-            val1 = np.dot(resT, invcov)
-            val = np.dot(val1, res)
+            val1 = np.dot(res, invcov)
+            val = np.dot(val1, resT)
             final = -1/2*val
             det = np.linalg.det(covmats[j])
             div = np.power(det, d/2)
@@ -143,8 +142,7 @@ def qdaTest(means,covmats,Xtest,ytest):
             if (mx < total):
                 mx = total
                 ypred[i] = j+1
-    
-    
+
     count = 0
     for i in range(n):
         if (ytest[i] == ypred[i]):
@@ -323,9 +321,6 @@ for lambd in lambdas:
     w_l = learnRidgeRegression(X_i,y,lambd)
     mses3_train[i] = testOLERegression(w_l,X_i,y)
     mses3[i] = testOLERegression(w_l,Xtest_i,ytest)
-    #print("lambda is "+str(lambd))
-    #print("train value is "+str(mses3_train[i]))
-    #print("test value i "+str(mses3[i]))
     i = i + 1
 
 fig = plt.figure(figsize=[12,6])
@@ -353,9 +348,6 @@ for lambd in lambdas:
     w_l = np.reshape(w_l,[len(w_l),1])
     mses4_train[i] = testOLERegression(w_l,X_i,y)
     mses4[i] = testOLERegression(w_l,Xtest_i,ytest)
-    #print("lambda is "+str(lambd))
-    #print(float(mses4_train[i]))
-    #print(float(mses4[i]))
     i = i + 1
 fig = plt.figure(figsize=[12,6])
 plt.subplot(1, 2, 1)
